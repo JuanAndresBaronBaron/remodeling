@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion';
+import ceramicImg from '../assets/images/service-ceramic.png';
+import showerImg from '../assets/images/service-shower.png';
+import commercialImg from '../assets/images/service-commercial.png';
+import woodImg from '../assets/images/service-wood.png';
 
-const images = [
-  '/src/assets/images/service-ceramic.png',
-  '/src/assets/images/service-shower.png',
-  '/src/assets/images/service-commercial.png',
-  '/src/assets/images/service-wood.png',
-];
+const images = [ceramicImg, showerImg, commercialImg, woodImg];
 
 export default function Gallery({ t }) {
   return (

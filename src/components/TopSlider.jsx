@@ -1,27 +1,31 @@
 import { useEffect, useState } from 'react';
+import ceramicImg from '../assets/images/service-ceramic.png';
+import showerImg from '../assets/images/service-shower.png';
+import commercialImg from '../assets/images/service-commercial.png';
+import woodImg from '../assets/images/service-wood.png';
 
 export default function TopSlider({ t }) {
-  const AUTO_PLAY_MS = 4000; // change image every 3 seconds
-  const TRANSITION_MS = 500; // faster slide animation
+  const AUTO_PLAY_MS = 3000;
+  const TRANSITION_MS = 500;
 
   const slides = [
     {
-      img: '/src/assets/images/service-ceramic.png',
+      img: ceramicImg,
       title: t?.slides?.[0]?.title ?? 'Premium Tile Installation',
       subtitle: t?.slides?.[0]?.subtitle ?? 'Clean lines, perfect leveling, long-lasting results.',
     },
     {
-      img: '/src/assets/images/service-shower.png',
+      img: showerImg,
       title: t?.slides?.[1]?.title ?? 'Luxury Shower Transformations',
       subtitle: t?.slides?.[1]?.subtitle ?? 'Waterproof, modern, and built to impress.',
     },
     {
-      img: '/src/assets/images/service-commercial.png',
+      img: commercialImg,
       title: t?.slides?.[2]?.title ?? 'Commercial Tile Solutions',
       subtitle: t?.slides?.[2]?.subtitle ?? 'Durable floors for high-traffic spaces.',
     },
     {
-      img: '/src/assets/images/service-wood.png',
+      img: woodImg,
       title: t?.slides?.[3]?.title ?? 'Wood-Look Elegance',
       subtitle: t?.slides?.[3]?.subtitle ?? 'Warm aesthetics with tile durability.',
     },
