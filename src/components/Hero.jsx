@@ -31,8 +31,6 @@ export default function Hero({ t }) {
 
   return (
     <section className="hero" id="home">
-      <div className="overlay" />
-
       <div className="hero-tile-effect">
         {tiles.map((tile) => {
           const distance = getDistance(tile);

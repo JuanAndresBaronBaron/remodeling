@@ -10,15 +10,16 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
   const scrollToSection = (id) => {
     closeMenu();
 
-    // special case for home
-    if (id === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
+    requestAnimationFrame(() => {
+      if (id === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
 
-    const el = document.getElementById(id);
-    if (el) {
-      const headerOffset = 92; // adjust if your navbar is taller/shorter
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const headerOffset = 110;
       const elementPosition = el.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - headerOffset;
 
@@ -26,7 +27,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
         top: offsetPosition,
         behavior: 'smooth',
       });
-    }
+    });
   };
 
   useEffect(() => {
@@ -53,21 +54,19 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
   return (
     <header className="navbar" ref={navRef}>
       <div className="container nav-content">
-        <a
-          href="#home"
-          className="brand brand-box"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection('home');
-          }}
+        <button
+          type="button"
+          className="brand brand-box nav-home-btn"
+          onClick={() => scrollToSection('home')}
         >
           <img src={logo} alt={`${t.brand} logo`} className="brand-logo" />
           <span className="brand-text">{t.brand}</span>
-        </a>
+        </button>
 
         <nav className="nav-links">
           <a
             href="#home"
+            className="nav-link-btn"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('home');
@@ -78,6 +77,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
           <a
             href="#services"
+            className="nav-link-btn"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('services');
@@ -88,6 +88,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
           <a
             href="#about"
+            className="nav-link-btn"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('about');
@@ -98,6 +99,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
           <a
             href="#gallery"
+            className="nav-link-btn"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('gallery');
@@ -108,6 +110,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
           <a
             href="#contact"
+            className="nav-link-btn"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('contact');

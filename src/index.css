@@ -124,9 +124,39 @@ body {
   gap: 18px;
 }
 
+.nav-links .nav-link-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+.nav-link-btn,
+.nav-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--nav-link);
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-link-btn:hover,
+.nav-home-btn:hover {
+  color: var(--nav-link-hover);
+}
+
 .navbar nav a,
 .nav-links a,
-.navbar a {
+.navbar a,
+.nav-link-btn,
+.nav-home-btn {
   color: var(--nav-link);
   text-decoration: none;
   font-size: 0.95rem;
@@ -1260,7 +1290,23 @@ html.impact-shake #root {
   }
 }
 
+#home,
+#services,
+#about,
+#gallery,
+#contact {
+  scroll-margin-top: 110px;
+}
+
 @media (max-width: 768px) {
+  #home,
+  #services,
+  #about,
+  #gallery,
+  #contact {
+    scroll-margin-top: 140px;
+  }
+
   .container {
     width: calc(100% - 24px);
   }
