@@ -379,12 +379,31 @@ body {
   color: var(--text-strong);
 }
 
+.contact-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .contact-subtitle {
   max-width: 700px;
   margin: 0 auto 20px;
   line-height: 1.7;
   opacity: 0.95;
   color: var(--text);
+}
+
+.contact-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 14px;
+}
+
+.contact-actions .whatsapp-btn {
+  margin: 0 auto;
 }
 
 .contact-info {
@@ -798,6 +817,7 @@ body {
 .whatsapp-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: #25d366;
   color: white;
@@ -840,6 +860,12 @@ body {
   pointer-events: none;
   transform: translate3d(0, 0, 0);
   will-change: transform;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.hammer-cursor.is-visible {
+  opacity: 1;
 }
 
 .hammer-img {
@@ -1157,7 +1183,20 @@ html.impact-shake #root {
   }
 }
 
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+@media (hover: none), (pointer: coarse) {
+  body,
+  a,
+  button,
+  .btn,
+  input,
+  textarea,
+  select {
+    cursor: auto !important;
+  }
+}
+
+/* Keep hammer OFF only for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
   body,
   a,
   button,
@@ -1212,24 +1251,11 @@ html.impact-shake #root {
     width: calc(100% - 24px);
   }
 
-  .contact-actions {
-    margin: 8px 0 12px;
-  }
-
-  .contact-cta .whatsapp-btn {
-    padding: 11px 16px;
-    font-size: 0.92rem;
-  }
-
-  .contact-cta .whatsapp-btn {
-    padding: 11px 16px;
-    font-size: 0.92rem;
-  }
-
   .nav-content {
     flex-direction: column;
     align-items: stretch;
     padding: 10px 0;
+    gap: 10px;
   }
 
   .brand-box {
@@ -1250,22 +1276,66 @@ html.impact-shake #root {
     width: 100%;
     justify-content: center;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   .nav-links a {
     font-size: 0.82rem;
   }
 
+  /* Keep Theme + Language + Free Estimate in one row
+     but do NOT clip dropdown menus */
   .nav-actions {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: 8px;
+    align-items: center;
+    gap: 6px;
+    overflow: visible;
+    padding-bottom: 2px;
+  }
+
+  .nav-dropdown {
+    position: relative;
+    flex: 0 0 auto;
+    width: auto;
+    z-index: 1;
   }
 
   .nav-dropdown-btn,
   .nav-cta {
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
     padding: 8px 12px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  .nav-dropdown-btn {
+    min-width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .nav-cta {
+    min-width: fit-content;
+  }
+
+  .nav-dropdown-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    min-width: 150px;
+    z-index: 9999;
+  }
+
+  .dropdown-option {
+    text-align: center;
   }
 
   .section {
@@ -1333,21 +1403,13 @@ html.impact-shake #root {
     text-align: center;
   }
 
-  .contact-subtitle {
-    max-width: 700px;
-    margin: 0 auto 20px;
-    line-height: 1.7;
-    opacity: 0.95;
-    color: var(--text);
-  }
-
   .contact-actions {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 10px 0 14px;
   }
-
 
   .footer-content {
     gap: 10px;
@@ -1401,9 +1463,62 @@ html.impact-shake #root {
     font-size: 0.75rem;
   }
 
+  .nav-content {
+    gap: 8px;
+  }
+
   .nav-links {
     gap: 8px;
     font-size: 0.78rem;
+  }
+
+  /* Keep dropdowns working */
+  .nav-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    overflow: visible;
+    padding-bottom: 2px;
+  }
+
+  .nav-dropdown {
+    width: auto;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-dropdown-btn,
+  .nav-cta {
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 7px 10px;
+    font-size: 0.72rem;
+    line-height: 1;
+  }
+
+  .nav-dropdown-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .nav-cta {
+    min-width: fit-content;
+  }
+
+  .nav-dropdown-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    min-width: 140px;
+    z-index: 9999;
   }
 
   .top-slider {

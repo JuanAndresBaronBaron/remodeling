@@ -105,16 +105,27 @@ function createImpact3D(x, y) {
 export default function HammerCursorPro() {
   const cursorRef = useRef(null);
   const shakeTimerRef = useRef(null);
+  const hideTimerRef = useRef(null);
 
   const [enabled, setEnabled] = useState(true);
   const [clicking, setClicking] = useState(false);
   const [hoveringClickable, setHoveringClickable] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [impacts, setImpacts] = useState([]);
 
   useEffect(() => {
-    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setEnabled(!isTouch && !reduceMotion);
+    const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const updateEnabled = () => {
+      setEnabled(!mqReduce.matches);
+    };
+
+    updateEnabled();
+    mqReduce.addEventListener?.('change', updateEnabled);
+
+    return () => {
+      mqReduce.removeEventListener?.('change', updateEnabled);
+    };
   }, []);
 
   useEffect(() => {
@@ -131,6 +142,7 @@ export default function HammerCursorPro() {
     const move = (e) => {
       mx = e.clientX;
       my = e.clientY;
+      setVisible(true);
 
       const target = e.target instanceof Element ? e.target : null;
       setHoveringClickable(Boolean(target?.closest(CLICKABLE_SELECTOR)));
@@ -163,6 +175,11 @@ export default function HammerCursorPro() {
       y = cy;
       prevX = cx;
 
+      setVisible(true);
+
+      const target = e.target instanceof Element ? e.target : null;
+      setHoveringClickable(Boolean(target?.closest(CLICKABLE_SELECTOR)));
+
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
       }
@@ -182,21 +199,48 @@ export default function HammerCursorPro() {
       }, 180);
 
       window.setTimeout(() => setClicking(false), 130);
+
+      // Hide slightly after touch release on mobile
+      window.clearTimeout(hideTimerRef.current);
+      if (e.pointerType === 'touch') {
+        hideTimerRef.current = window.setTimeout(() => {
+          setVisible(false);
+        }, 250);
+      }
+
       window.setTimeout(() => {
         setImpacts((prev) => prev.filter((item) => item.id !== impact.id));
       }, 1100);
     };
 
+    const pointerUp = (e) => {
+      setClicking(false);
+
+      if (e.pointerType === 'touch') {
+        window.clearTimeout(hideTimerRef.current);
+        hideTimerRef.current = window.setTimeout(() => {
+          setVisible(false);
+        }, 250);
+      }
+    };
+
     window.addEventListener('mousemove', move, { passive: true });
-    window.addEventListener('pointerdown', pointerDown);
+    window.addEventListener('pointermove', move, { passive: true });
+    document.addEventListener('pointerdown', pointerDown, true);
+    document.addEventListener('pointerup', pointerUp, true);
+    document.addEventListener('pointercancel', pointerUp, true);
 
     raf = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', move);
-      window.removeEventListener('pointerdown', pointerDown);
+      window.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerdown', pointerDown, true);
+      document.removeEventListener('pointerup', pointerUp, true);
+      document.removeEventListener('pointercancel', pointerUp, true);
       cancelAnimationFrame(raf);
       window.clearTimeout(shakeTimerRef.current);
+      window.clearTimeout(hideTimerRef.current);
       document.documentElement.classList.remove('impact-shake');
     };
   }, [enabled]);
@@ -207,9 +251,9 @@ export default function HammerCursorPro() {
     <>
       <div
         ref={cursorRef}
-        className={`hammer-cursor ${clicking ? 'is-clicking' : ''} ${
-          hoveringClickable ? 'is-hovering' : ''
-        }`}
+        className={`hammer-cursor ${visible ? 'is-visible' : ''} ${
+          clicking ? 'is-clicking' : ''
+        } ${hoveringClickable ? 'is-hovering' : ''}`}
       >
         <img src={hammerImg} alt="" className="hammer-img" draggable={false} />
       </div>
