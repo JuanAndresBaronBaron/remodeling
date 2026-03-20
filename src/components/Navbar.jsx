@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logo from '../assets/images/logo.png';
 
 export default function Navbar({ t, lang, setLang, theme, setTheme }) {
   const [themeOpen, setThemeOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+
+  const closeAll = () => {
+    setThemeOpen(false);
+    setLangOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      const navbar = e.target.closest?.('.navbar');
+      if (!navbar) closeAll();
+    };
+
+    document.addEventListener('pointerdown', handleOutsideClick);
+    return () => document.removeEventListener('pointerdown', handleOutsideClick);
+  }, []);
 
   return (
     <header className="navbar">
@@ -26,7 +41,8 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className="nav-dropdown-btn"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setThemeOpen((prev) => !prev);
                 setLangOpen(false);
               }}
@@ -35,14 +51,15 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
               {t.nav.theme} ▾
             </button>
 
+            {/* Desktop dropdown */}
             {themeOpen && (
-              <div className="nav-dropdown-panel">
+              <div className="nav-dropdown-panel desktop-panel">
                 <button
                   type="button"
                   className={theme === 'light' ? 'dropdown-option active' : 'dropdown-option'}
                   onClick={() => {
                     setTheme('light');
-                    setThemeOpen(false);
+                    closeAll();
                   }}
                 >
                   {t.theme.light}
@@ -53,7 +70,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                   className={theme === 'mixed' ? 'dropdown-option active' : 'dropdown-option'}
                   onClick={() => {
                     setTheme('mixed');
-                    setThemeOpen(false);
+                    closeAll();
                   }}
                 >
                   {t.theme.mixed}
@@ -64,7 +81,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                   className={theme === 'dark' ? 'dropdown-option active' : 'dropdown-option'}
                   onClick={() => {
                     setTheme('dark');
-                    setThemeOpen(false);
+                    closeAll();
                   }}
                 >
                   {t.theme.dark}
@@ -77,7 +94,8 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className="nav-dropdown-btn"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setLangOpen((prev) => !prev);
                 setThemeOpen(false);
               }}
@@ -86,14 +104,15 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
               {t.nav.language} ▾
             </button>
 
+            {/* Desktop dropdown */}
             {langOpen && (
-              <div className="nav-dropdown-panel">
+              <div className="nav-dropdown-panel desktop-panel">
                 <button
                   type="button"
                   className={lang === 'en' ? 'dropdown-option active' : 'dropdown-option'}
                   onClick={() => {
                     setLang('en');
-                    setLangOpen(false);
+                    closeAll();
                   }}
                 >
                   EN
@@ -104,7 +123,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                   className={lang === 'es' ? 'dropdown-option active' : 'dropdown-option'}
                   onClick={() => {
                     setLang('es');
-                    setLangOpen(false);
+                    closeAll();
                   }}
                 >
                   ES
@@ -118,10 +137,75 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             className="nav-cta"
             target="_blank"
             rel="noreferrer"
+            onClick={closeAll}
           >
             {t.nav.freeEstimate}
           </a>
         </div>
+
+        {/* Mobile dropdown panel BELOW the buttons */}
+        {themeOpen && (
+          <div className="nav-mobile-panel">
+            <button
+              type="button"
+              className={theme === 'light' ? 'dropdown-option active' : 'dropdown-option'}
+              onClick={() => {
+                setTheme('light');
+                closeAll();
+              }}
+            >
+              {t.theme.light}
+            </button>
+
+            <button
+              type="button"
+              className={theme === 'mixed' ? 'dropdown-option active' : 'dropdown-option'}
+              onClick={() => {
+                setTheme('mixed');
+                closeAll();
+              }}
+            >
+              {t.theme.mixed}
+            </button>
+
+            <button
+              type="button"
+              className={theme === 'dark' ? 'dropdown-option active' : 'dropdown-option'}
+              onClick={() => {
+                setTheme('dark');
+                closeAll();
+              }}
+            >
+              {t.theme.dark}
+            </button>
+          </div>
+        )}
+
+        {langOpen && (
+          <div className="nav-mobile-panel">
+            <button
+              type="button"
+              className={lang === 'en' ? 'dropdown-option active' : 'dropdown-option'}
+              onClick={() => {
+                setLang('en');
+                closeAll();
+              }}
+            >
+              EN
+            </button>
+
+            <button
+              type="button"
+              className={lang === 'es' ? 'dropdown-option active' : 'dropdown-option'}
+              onClick={() => {
+                setLang('es');
+                closeAll();
+              }}
+            >
+              ES
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );
