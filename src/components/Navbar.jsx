@@ -7,6 +7,35 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
   const closeMenu = () => setOpenMenu(null);
 
+  const goToSection = (id) => {
+    closeMenu();
+
+    const target =
+      id === 'home'
+        ? document.getElementById('home')
+        : document.getElementById(id);
+
+    if (!target) return;
+
+    const headerOffset = 120; // adjust if needed
+    const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+    const offsetPosition = Math.max(0, elementPosition - headerOffset);
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
+
+    // update hash without jumping
+    window.history.replaceState(null, '', `#${id}`);
+  };
+
+  const handleNavTap = (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    goToSection(id);
+  };
+
   useEffect(() => {
     const handleOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -34,32 +63,58 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
         <button
           type="button"
           className="brand brand-box nav-home-btn"
-          onClick={closeMenu}
+          onClick={() => goToSection('home')}
+          onTouchEnd={(e) => handleNavTap(e, 'home')}
         >
           <img src={logo} alt={`${t.brand} logo`} className="brand-logo" />
           <span className="brand-text">{t.brand}</span>
         </button>
 
-        <nav className="nav-links">
-          <a href="#home" className="nav-link-btn" onClick={closeMenu}>
+        <nav className="nav-links" aria-label="Main navigation">
+          <button
+            type="button"
+            className="nav-link-btn"
+            onClick={(e) => handleNavTap(e, 'home')}
+            onTouchEnd={(e) => handleNavTap(e, 'home')}
+          >
             {t.nav.home}
-          </a>
+          </button>
 
-          <a href="#services" className="nav-link-btn" onClick={closeMenu}>
+          <button
+            type="button"
+            className="nav-link-btn"
+            onClick={(e) => handleNavTap(e, 'services')}
+            onTouchEnd={(e) => handleNavTap(e, 'services')}
+          >
             {t.nav.services}
-          </a>
+          </button>
 
-          <a href="#about" className="nav-link-btn" onClick={closeMenu}>
+          <button
+            type="button"
+            className="nav-link-btn"
+            onClick={(e) => handleNavTap(e, 'about')}
+            onTouchEnd={(e) => handleNavTap(e, 'about')}
+          >
             {t.nav.about}
-          </a>
+          </button>
 
-          <a href="#gallery" className="nav-link-btn" onClick={closeMenu}>
+          <button
+            type="button"
+            className="nav-link-btn"
+            onClick={(e) => handleNavTap(e, 'gallery')}
+            onTouchEnd={(e) => handleNavTap(e, 'gallery')}
+          >
             {t.nav.gallery}
-          </a>
+          </button>
 
-          <a href="#contact" className="nav-link-btn" onClick={closeMenu}>
+          <button
+            type="button"
+            className="nav-link-btn"
+            onClick={(e) => handleNavTap(e, 'contact')}
+            onTouchEnd={(e) => handleNavTap(e, 'contact')}
+          >
             {t.nav.contact}
-          </a>
+          </button>
         </nav>
 
         <div className="nav-actions">
