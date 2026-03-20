@@ -7,6 +7,28 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
   const closeMenu = () => setOpenMenu(null);
 
+  const scrollToSection = (id) => {
+    closeMenu();
+
+    // special case for home
+    if (id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const el = document.getElementById(id);
+    if (el) {
+      const headerOffset = 92; // adjust if your navbar is taller/shorter
+      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   useEffect(() => {
     const handleOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -31,17 +53,68 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
   return (
     <header className="navbar" ref={navRef}>
       <div className="container nav-content">
-        <a href="#home" className="brand brand-box" onPointerDown={closeMenu}>
+        <a
+          href="#home"
+          className="brand brand-box"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection('home');
+          }}
+        >
           <img src={logo} alt={`${t.brand} logo`} className="brand-logo" />
           <span className="brand-text">{t.brand}</span>
         </a>
 
-        <nav className="nav-links" onPointerDown={closeMenu}>
-          <a href="#home">{t.nav.home}</a>
-          <a href="#services">{t.nav.services}</a>
-          <a href="#about">{t.nav.about}</a>
-          <a href="#gallery">{t.nav.gallery}</a>
-          <a href="#contact">{t.nav.contact}</a>
+        <nav className="nav-links">
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('home');
+            }}
+          >
+            {t.nav.home}
+          </a>
+
+          <a
+            href="#services"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('services');
+            }}
+          >
+            {t.nav.services}
+          </a>
+
+          <a
+            href="#about"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('about');
+            }}
+          >
+            {t.nav.about}
+          </a>
+
+          <a
+            href="#gallery"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('gallery');
+            }}
+          >
+            {t.nav.gallery}
+          </a>
+
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('contact');
+            }}
+          >
+            {t.nav.contact}
+          </a>
         </nav>
 
         <div className="nav-actions">
@@ -154,7 +227,6 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
           </a>
         </div>
 
-        {/* Mobile panel - single menu below the row */}
         {openMenu === 'theme' && (
           <div className="nav-mobile-panel">
             <button
