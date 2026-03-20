@@ -7,29 +7,6 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
 
   const closeMenu = () => setOpenMenu(null);
 
-  const scrollToSection = (id) => {
-    closeMenu();
-
-    requestAnimationFrame(() => {
-      if (id === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const headerOffset = 110;
-      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    });
-  };
-
   useEffect(() => {
     const handleOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -57,65 +34,30 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
         <button
           type="button"
           className="brand brand-box nav-home-btn"
-          onClick={() => scrollToSection('home')}
+          onClick={closeMenu}
         >
           <img src={logo} alt={`${t.brand} logo`} className="brand-logo" />
           <span className="brand-text">{t.brand}</span>
         </button>
 
         <nav className="nav-links">
-          <a
-            href="#home"
-            className="nav-link-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('home');
-            }}
-          >
+          <a href="#home" className="nav-link-btn" onClick={closeMenu}>
             {t.nav.home}
           </a>
 
-          <a
-            href="#services"
-            className="nav-link-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('services');
-            }}
-          >
+          <a href="#services" className="nav-link-btn" onClick={closeMenu}>
             {t.nav.services}
           </a>
 
-          <a
-            href="#about"
-            className="nav-link-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('about');
-            }}
-          >
+          <a href="#about" className="nav-link-btn" onClick={closeMenu}>
             {t.nav.about}
           </a>
 
-          <a
-            href="#gallery"
-            className="nav-link-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('gallery');
-            }}
-          >
+          <a href="#gallery" className="nav-link-btn" onClick={closeMenu}>
             {t.nav.gallery}
           </a>
 
-          <a
-            href="#contact"
-            className="nav-link-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('contact');
-            }}
-          >
+          <a href="#contact" className="nav-link-btn" onClick={closeMenu}>
             {t.nav.contact}
           </a>
         </nav>

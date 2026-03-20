@@ -1290,6 +1290,11 @@ html.impact-shake #root {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px;
+}
+
 #home,
 #services,
 #about,
@@ -1299,6 +1304,10 @@ html.impact-shake #root {
 }
 
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 140px;
+  }
+
   #home,
   #services,
   #about,
