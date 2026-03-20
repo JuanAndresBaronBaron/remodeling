@@ -390,7 +390,7 @@ body {
   background: var(--surface-2);
   color: var(--muted);
   text-align: center;
-  padding: 18px 0;
+  padding: 16px 0;
   border-top: 1px solid var(--border);
 }
 
@@ -398,7 +398,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   text-align: center;
 }
 
@@ -408,9 +408,24 @@ body {
   color: var(--text-strong);
 }
 
+.footer-credit-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-mini-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .footer-subtitle {
   font-size: 0.82rem;
   color: var(--muted);
+  margin: 0;
 }
 
 .footer-actions {
@@ -422,28 +437,24 @@ body {
 }
 
 .footer-mini-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
   border-radius: 999px;
   text-decoration: none;
-  font-size: 0.78rem;
-  font-weight: 700;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-strong);
+  background: transparent;
   transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
 }
 
 .footer-mini-btn svg {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .footer-mini-btn:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .footer-mini-btn.whatsapp {

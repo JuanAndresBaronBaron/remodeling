@@ -13,32 +13,34 @@ export default function Footer({ t }) {
           © {new Date().getFullYear()} {t.brand}. {t.footer.rights}
         </p>
 
-        <p className="footer-subtitle">
-          {t.footer.builtBy} Juan Andres Baron Baron
-        </p>
+        <div className="footer-credit-row">
+          <p className="footer-subtitle">
+            {t.footer.builtBy} Juan Andres Baron Baron
+          </p>
 
-        <div className="footer-actions">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="footer-mini-btn whatsapp"
-            aria-label="Contact on WhatsApp"
-            title="WhatsApp"
-          >
-            <FaWhatsapp />
-          </a>
-
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="footer-mini-btn linkedin"
-            aria-label="Contact on LinkedIn"
-            title="LinkedIn"
-          >
-            <FaLinkedinIn />
-          </a>
+          <div className="footer-mini-actions">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="footer-mini-btn whatsapp"
+              aria-label="Contact on WhatsApp"
+              title="WhatsApp"
+            >
+              <FaWhatsapp />
+            </a>
+            <span> </span>
+            <a
+              href={linkedinUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="footer-mini-btn linkedin"
+              aria-label="Contact on LinkedIn"
+              title="LinkedIn"
+            >
+              <FaLinkedinIn />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
