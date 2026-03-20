@@ -6,6 +6,14 @@ export const translations = {
       about: 'About',
       gallery: 'Gallery',
       contact: 'Contact',
+      theme: 'Theme',
+      language: 'Language',
+      freeEstimate: 'Free Estimate',
+    },
+    theme: {
+      light: 'Light',
+      mixed: 'Mixed',
+      dark: 'Dark',
     },
     brand: 'BAROJAS REMODELING',
     hero: {
@@ -63,16 +71,29 @@ export const translations = {
       ],
     },
     slides: [
-      { title: 'Premium Tile Installation', subtitle: 'Clean lines, perfect leveling, long-lasting results.' },
-      { title: 'Luxury Shower Transformations', subtitle: 'Waterproof, modern, and built to impress.' },
-      { title: 'Commercial Tile Solutions', subtitle: 'Durable floors for high-traffic spaces.' },
-      { title: 'Wood-Look Elegance', subtitle: 'Warm aesthetics with tile durability.' },
+      {
+        title: 'Premium Tile Installation',
+        subtitle: 'Clean lines, perfect leveling, long-lasting results.',
+      },
+      {
+        title: 'Luxury Shower Transformations',
+        subtitle: 'Waterproof, modern, and built to impress.',
+      },
+      {
+        title: 'Commercial Tile Solutions',
+        subtitle: 'Durable floors for high-traffic spaces.',
+      },
+      {
+        title: 'Wood-Look Elegance',
+        subtitle: 'Warm aesthetics with tile durability.',
+      },
     ],
     footer: {
       rights: 'All rights reserved.',
       builtBy: 'Built by',
     },
   },
+
   es: {
     nav: {
       home: 'Inicio',
@@ -80,6 +101,14 @@ export const translations = {
       about: 'Nosotros',
       gallery: 'Galería',
       contact: 'Contacto',
+      theme: 'Tema',
+      language: 'Idioma',
+      freeEstimate: 'Cotización Gratis',
+    },
+    theme: {
+      light: 'Claro',
+      mixed: 'Mixto',
+      dark: 'Oscuro',
     },
     brand: 'BAROJAS REMODELING',
     hero: {
@@ -137,10 +166,22 @@ export const translations = {
       ],
     },
     slides: [
-      { title: 'Instalación de Baldosas Premium', subtitle: 'Líneas limpias, nivelación perfecta y resultados duraderos.' },
-      { title: 'Transformaciones de Duchas de Lujo', subtitle: 'Impermeables, modernas y hechas para impresionar.' },
-      { title: 'Soluciones Comerciales en Baldosas', subtitle: 'Pisos durables para espacios de alto tráfico.' },
-      { title: 'Elegancia Tipo Madera', subtitle: 'Estética cálida con la durabilidad de la baldosa.' },
+      {
+        title: 'Instalación de Baldosas Premium',
+        subtitle: 'Líneas limpias, nivelación perfecta y resultados duraderos.',
+      },
+      {
+        title: 'Transformaciones de Duchas de Lujo',
+        subtitle: 'Impermeables, modernas y hechas para impresionar.',
+      },
+      {
+        title: 'Soluciones Comerciales en Baldosas',
+        subtitle: 'Pisos durables para espacios de alto tráfico.',
+      },
+      {
+        title: 'Elegancia Tipo Madera',
+        subtitle: 'Estética cálida con la durabilidad de la baldosa.',
+      },
     ],
     footer: {
       rights: 'Todos los derechos reservados.',

@@ -22,7 +22,6 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
         </nav>
 
         <div className="nav-actions">
-          {/* Theme dropdown */}
           <div className="nav-dropdown">
             <button
               type="button"
@@ -33,7 +32,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
               }}
               aria-expanded={themeOpen}
             >
-              Theme ▾
+              {t.nav.theme} ▾
             </button>
 
             {themeOpen && (
@@ -46,7 +45,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                     setThemeOpen(false);
                   }}
                 >
-                  Light
+                  {t.theme.light}
                 </button>
 
                 <button
@@ -57,7 +56,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                     setThemeOpen(false);
                   }}
                 >
-                  Mixed
+                  {t.theme.mixed}
                 </button>
 
                 <button
@@ -68,13 +67,12 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                     setThemeOpen(false);
                   }}
                 >
-                  Dark
+                  {t.theme.dark}
                 </button>
               </div>
             )}
           </div>
 
-          {/* Language dropdown */}
           <div className="nav-dropdown">
             <button
               type="button"
@@ -85,7 +83,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
               }}
               aria-expanded={langOpen}
             >
-              Lang ▾
+              {t.nav.language} ▾
             </button>
 
             {langOpen && (
@@ -121,7 +119,7 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             target="_blank"
             rel="noreferrer"
           >
-            Free Estimate
+            {t.nav.freeEstimate}
           </a>
         </div>
       </div>

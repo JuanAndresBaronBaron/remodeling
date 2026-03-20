@@ -10,15 +10,17 @@ export default function Contact({ t }) {
         <h2 className="section-title">{t.contact.title}</h2>
         <p className="contact-subtitle">{t.contact.subtitle}</p>
 
-        <a
-          href={whatsappLink}
-          target="_blank"
-          rel="noreferrer"
-          className="btn whatsapp-btn"
-        >
-          <FaWhatsapp />
-          {t.contact.button}
-        </a>
+        <div className="contact-actions">
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noreferrer"
+            className="btn whatsapp-btn"
+          >
+            <FaWhatsapp />
+            {t.contact.button}
+          </a>
+        </div>
 
         <p className="contact-info">{t.contact.info}</p>
       </div>
