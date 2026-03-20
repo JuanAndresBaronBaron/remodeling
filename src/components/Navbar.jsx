@@ -1,34 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/images/logo.png';
 
 export default function Navbar({ t, lang, setLang, theme, setTheme }) {
-  const [themeOpen, setThemeOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
+  const navRef = useRef(null);
+  const [openMenu, setOpenMenu] = useState(null); // 'theme' | 'lang' | null
 
-  const closeAll = () => {
-    setThemeOpen(false);
-    setLangOpen(false);
-  };
+  const closeMenu = () => setOpenMenu(null);
 
   useEffect(() => {
-    const handleOutsideClick = (e) => {
-      const navbar = e.target.closest?.('.navbar');
-      if (!navbar) closeAll();
+    const handleOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        closeMenu();
+      }
     };
 
-    document.addEventListener('pointerdown', handleOutsideClick);
-    return () => document.removeEventListener('pointerdown', handleOutsideClick);
+    document.addEventListener('pointerdown', handleOutside);
+    return () => document.removeEventListener('pointerdown', handleOutside);
   }, []);
 
+  const handleThemeSelect = (value) => {
+    setTheme(value);
+    closeMenu();
+  };
+
+  const handleLangSelect = (value) => {
+    setLang(value);
+    closeMenu();
+  };
+
   return (
-    <header className="navbar">
+    <header className="navbar" ref={navRef}>
       <div className="container nav-content">
-        <a href="#home" className="brand brand-box">
+        <a href="#home" className="brand brand-box" onPointerDown={closeMenu}>
           <img src={logo} alt={`${t.brand} logo`} className="brand-logo" />
           <span className="brand-text">{t.brand}</span>
         </a>
 
-        <nav className="nav-links">
+        <nav className="nav-links" onPointerDown={closeMenu}>
           <a href="#home">{t.nav.home}</a>
           <a href="#services">{t.nav.services}</a>
           <a href="#about">{t.nav.about}</a>
@@ -41,25 +49,25 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className="nav-dropdown-btn"
-              onClick={(e) => {
+              onPointerDown={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
-                setThemeOpen((prev) => !prev);
-                setLangOpen(false);
+                setOpenMenu((prev) => (prev === 'theme' ? null : 'theme'));
               }}
-              aria-expanded={themeOpen}
+              aria-expanded={openMenu === 'theme'}
             >
               {t.nav.theme} ▾
             </button>
 
-            {/* Desktop dropdown */}
-            {themeOpen && (
+            {openMenu === 'theme' && (
               <div className="nav-dropdown-panel desktop-panel">
                 <button
                   type="button"
                   className={theme === 'light' ? 'dropdown-option active' : 'dropdown-option'}
-                  onClick={() => {
-                    setTheme('light');
-                    closeAll();
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleThemeSelect('light');
                   }}
                 >
                   {t.theme.light}
@@ -68,9 +76,10 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                 <button
                   type="button"
                   className={theme === 'mixed' ? 'dropdown-option active' : 'dropdown-option'}
-                  onClick={() => {
-                    setTheme('mixed');
-                    closeAll();
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleThemeSelect('mixed');
                   }}
                 >
                   {t.theme.mixed}
@@ -79,9 +88,10 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                 <button
                   type="button"
                   className={theme === 'dark' ? 'dropdown-option active' : 'dropdown-option'}
-                  onClick={() => {
-                    setTheme('dark');
-                    closeAll();
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleThemeSelect('dark');
                   }}
                 >
                   {t.theme.dark}
@@ -94,25 +104,25 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className="nav-dropdown-btn"
-              onClick={(e) => {
+              onPointerDown={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
-                setLangOpen((prev) => !prev);
-                setThemeOpen(false);
+                setOpenMenu((prev) => (prev === 'lang' ? null : 'lang'));
               }}
-              aria-expanded={langOpen}
+              aria-expanded={openMenu === 'lang'}
             >
               {t.nav.language} ▾
             </button>
 
-            {/* Desktop dropdown */}
-            {langOpen && (
+            {openMenu === 'lang' && (
               <div className="nav-dropdown-panel desktop-panel">
                 <button
                   type="button"
                   className={lang === 'en' ? 'dropdown-option active' : 'dropdown-option'}
-                  onClick={() => {
-                    setLang('en');
-                    closeAll();
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleLangSelect('en');
                   }}
                 >
                   EN
@@ -121,9 +131,10 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
                 <button
                   type="button"
                   className={lang === 'es' ? 'dropdown-option active' : 'dropdown-option'}
-                  onClick={() => {
-                    setLang('es');
-                    closeAll();
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleLangSelect('es');
                   }}
                 >
                   ES
@@ -137,21 +148,22 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             className="nav-cta"
             target="_blank"
             rel="noreferrer"
-            onClick={closeAll}
+            onPointerDown={closeMenu}
           >
             {t.nav.freeEstimate}
           </a>
         </div>
 
-        {/* Mobile dropdown panel BELOW the buttons */}
-        {themeOpen && (
+        {/* Mobile panel - single menu below the row */}
+        {openMenu === 'theme' && (
           <div className="nav-mobile-panel">
             <button
               type="button"
               className={theme === 'light' ? 'dropdown-option active' : 'dropdown-option'}
-              onClick={() => {
-                setTheme('light');
-                closeAll();
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleThemeSelect('light');
               }}
             >
               {t.theme.light}
@@ -160,9 +172,10 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className={theme === 'mixed' ? 'dropdown-option active' : 'dropdown-option'}
-              onClick={() => {
-                setTheme('mixed');
-                closeAll();
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleThemeSelect('mixed');
               }}
             >
               {t.theme.mixed}
@@ -171,9 +184,10 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className={theme === 'dark' ? 'dropdown-option active' : 'dropdown-option'}
-              onClick={() => {
-                setTheme('dark');
-                closeAll();
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleThemeSelect('dark');
               }}
             >
               {t.theme.dark}
@@ -181,14 +195,15 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
           </div>
         )}
 
-        {langOpen && (
+        {openMenu === 'lang' && (
           <div className="nav-mobile-panel">
             <button
               type="button"
               className={lang === 'en' ? 'dropdown-option active' : 'dropdown-option'}
-              onClick={() => {
-                setLang('en');
-                closeAll();
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleLangSelect('en');
               }}
             >
               EN
@@ -197,9 +212,10 @@ export default function Navbar({ t, lang, setLang, theme, setTheme }) {
             <button
               type="button"
               className={lang === 'es' ? 'dropdown-option active' : 'dropdown-option'}
-              onClick={() => {
-                setLang('es');
-                closeAll();
+              onPointerDown={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleLangSelect('es');
               }}
             >
               ES
